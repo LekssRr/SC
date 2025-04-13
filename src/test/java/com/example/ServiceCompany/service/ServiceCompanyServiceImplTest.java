@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ServiceCompanyServiceTest {
+public class ServiceCompanyServiceImplTest {
     @Mock
     private final AutoRepository autoRepositoryTest = Mockito.mock(AutoRepository.class);
     @Mock
     private final ServiceCompanyRepository serviceCompanyRepositoryTest = Mockito.mock(ServiceCompanyRepository.class);
     @InjectMocks
-    private final ServiceCompanyService serviceCompanyService = new ServiceCompanyService(serviceCompanyRepositoryTest, autoRepositoryTest);
+    private final ServiceCompanyServiceImpl serviceCompanyServiceImpl = new ServiceCompanyServiceImpl(serviceCompanyRepositoryTest, autoRepositoryTest);
 
     @Test
     public void getAllServiceCompanyTest() {
@@ -33,7 +33,7 @@ public class ServiceCompanyServiceTest {
         testServiceCompanyService.add(testSC1);
         testServiceCompanyService.add(testSC2);
         Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testServiceCompanyService);
-        Assertions.assertEquals(serviceCompanyService.getAllServiceCompany().size(), testServiceCompanyService.size());
+        Assertions.assertEquals(serviceCompanyServiceImpl.getAllServiceCompany().size(), testServiceCompanyService.size());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ServiceCompanyServiceTest {
         Optional<ServiceCompanyEntity> testSCE = Optional.of(serviceCompanyEntity);
         Optional<List<AutoEntity>> testArrayList = Optional.of(testAutoEntity);
         Mockito.when(serviceCompanyRepositoryTest.findById(sc1)).thenReturn(testSCE);
-        Assertions.assertEquals(serviceCompanyService.getAllVinToServiceCompany(sc1).getClass(), testAutoDto.getClass());
+        Assertions.assertEquals(serviceCompanyServiceImpl.getAllVinToServiceCompany(sc1).getClass(), testAutoDto.getClass());
     }
 
     @Test
@@ -72,8 +72,8 @@ public class ServiceCompanyServiceTest {
         testServiceCompanyService.add(testSC1);
         testServiceCompanyService.add(testSC2);
         Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testServiceCompanyService);
-        Assertions.assertEquals(serviceCompanyService.addServiceCompany("SC-4"), true);
-        Assertions.assertEquals(serviceCompanyService.addServiceCompany("SC-1"), false);
+        Assertions.assertEquals(serviceCompanyServiceImpl.addServiceCompany("SC-4"), true);
+        Assertions.assertEquals(serviceCompanyServiceImpl.addServiceCompany("SC-1"), false);
     }
 
     @Test
@@ -86,8 +86,8 @@ public class ServiceCompanyServiceTest {
         testServiceCompanyService.add(testSC1);
         testServiceCompanyService.add(testSC2);
         Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testServiceCompanyService);
-        Assertions.assertEquals(serviceCompanyService.deleteServiceCompany("SC-1"), true);
-        Assertions.assertEquals(serviceCompanyService.deleteServiceCompany("SC-4"), false);
+        Assertions.assertEquals(serviceCompanyServiceImpl.deleteServiceCompany("SC-1"), true);
+        Assertions.assertEquals(serviceCompanyServiceImpl.deleteServiceCompany("SC-4"), false);
     }
 
     @Test

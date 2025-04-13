@@ -15,20 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AutoServiceTest {
+public class AutoServiceImplTest {
     @Mock
     private final AutoRepository autoRepositoryTest = Mockito.mock(AutoRepository.class);
     @Mock
     private final ServiceCompanyRepository serviceCompanyRepositoryTest = Mockito.mock(ServiceCompanyRepository.class);
     @InjectMocks
-    private final AutoService autoServiceTest = new AutoService(serviceCompanyRepositoryTest, autoRepositoryTest);
+    private final AutoServiceImpl autoServiceImplTest = new AutoServiceImpl(serviceCompanyRepositoryTest, autoRepositoryTest);
 
     @Test
     public void getServiceCompanyTest() {
         String vinCodeTest = "11111111111111111";
         String nameServiceCompanyTest = "SC-Test";
         AutoDto testAutoDto = new AutoDto(vinCodeTest, nameServiceCompanyTest);
-        Assertions.assertEquals(autoServiceTest.getServiceCompany(testAutoDto), nameServiceCompanyTest);
+        Assertions.assertEquals(autoServiceImplTest.getServiceCompany(testAutoDto), nameServiceCompanyTest);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class AutoServiceTest {
         AutoDto autoDto = new AutoDto(vin, serviceCompanyEntity.getNameServiceCompany());
         Optional<AutoEntity> optionalAutoEntity = Optional.ofNullable(testAutoEntity);
         Mockito.when(autoRepositoryTest.findById(vin)).thenReturn(optionalAutoEntity);
-        Assertions.assertEquals(autoServiceTest.getAuto(vin), autoDto);
+        Assertions.assertEquals(autoServiceImplTest.getAuto(vin), autoDto);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class AutoServiceTest {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
-        Assertions.assertEquals(autoServiceTest.getAllAuto(), autoDto);
+        Assertions.assertEquals(autoServiceImplTest.getAllAuto(), autoDto);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class AutoServiceTest {
         autoDto.add(new AutoDto(test.getVinCode(), test.getServiceCompany().getNameServiceCompany()));
         autoDto.add(new AutoDto(test2.getVinCode(), test2.getServiceCompany().getNameServiceCompany()));
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
-        Assertions.assertEquals(autoServiceTest.getAllAutoToServiceCompany(sc.getNameServiceCompany()), autoDto);
+        Assertions.assertEquals(autoServiceImplTest.getAllAutoToServiceCompany(sc.getNameServiceCompany()), autoDto);
     }
 
     @Test
@@ -111,8 +111,8 @@ public class AutoServiceTest {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
-        Assertions.assertEquals(autoServiceTest.addAuto(test.getVinCode(), test.getServiceCompany().getNameServiceCompany()), true);
-        Assertions.assertEquals(autoServiceTest.addAuto(test3.getVinCode(), test3.getServiceCompany().getNameServiceCompany()), false);
+        Assertions.assertEquals(autoServiceImplTest.addAuto(test.getVinCode(), test.getServiceCompany().getNameServiceCompany()), true);
+        Assertions.assertEquals(autoServiceImplTest.addAuto(test3.getVinCode(), test3.getServiceCompany().getNameServiceCompany()), false);
 
     }
 
@@ -136,8 +136,8 @@ public class AutoServiceTest {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
-        Assertions.assertEquals(autoServiceTest.deleteAuto(vin), true);
-        Assertions.assertEquals(autoServiceTest.deleteAuto("2222"), false);
+        Assertions.assertEquals(autoServiceImplTest.deleteAuto(vin), true);
+        Assertions.assertEquals(autoServiceImplTest.deleteAuto("2222"), false);
     }
 
     @Test
@@ -155,8 +155,8 @@ public class AutoServiceTest {
         testList.add(sc1);
         testList.add(sc2);
         Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testList);
-        Assertions.assertEquals(autoServiceTest.isServiceCompany(sc.getNameServiceCompany()), true);
-        Assertions.assertEquals(autoServiceTest.isServiceCompany("SC-222"), false);
+        Assertions.assertEquals(autoServiceImplTest.isServiceCompany(sc.getNameServiceCompany()), true);
+        Assertions.assertEquals(autoServiceImplTest.isServiceCompany("SC-222"), false);
     }
 
     @Test
@@ -179,10 +179,10 @@ public class AutoServiceTest {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
-        Assertions.assertEquals(autoServiceTest.isAuto(vin), true);
-        Assertions.assertEquals(autoServiceTest.isAuto(vin1), true);
-        Assertions.assertEquals(autoServiceTest.isAuto(vin2), true);
-        Assertions.assertEquals(autoServiceTest.isAuto("31231"), false);
+        Assertions.assertEquals(autoServiceImplTest.isAuto(vin), true);
+        Assertions.assertEquals(autoServiceImplTest.isAuto(vin1), true);
+        Assertions.assertEquals(autoServiceImplTest.isAuto(vin2), true);
+        Assertions.assertEquals(autoServiceImplTest.isAuto("31231"), false);
     }
 
 }

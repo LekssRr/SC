@@ -2,7 +2,7 @@ package com.example.ServiceCompany.controller;
 
 import com.example.ServiceCompany.dto.AutoDto;
 import com.example.ServiceCompany.dto.ServiceCompanyDto;
-import com.example.ServiceCompany.service.ServiceCompanyService;
+import com.example.ServiceCompany.service.ServiceCompanyServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import java.util.List;
 @ExtendWith(MockitoExtension.class)
 public class ServiceCompanyControllerTest {
     @Mock
-    private ServiceCompanyService serviceCompanyService;
+    private ServiceCompanyServiceImpl serviceCompanyServiceImpl;
     @InjectMocks
     private ServiceCompanyController serviceCompanyController;
     MockMvc mockMvc;
@@ -45,7 +45,7 @@ public class ServiceCompanyControllerTest {
         serviceCompanyDtoList.add(serviceCompanyDto1);
         serviceCompanyDtoList.add(serviceCompanyDto2);
         serviceCompanyDtoList.add(serviceCompanyDto3);
-        Mockito.when(serviceCompanyService.getAllServiceCompany()).thenReturn(serviceCompanyDtoList);
+        Mockito.when(serviceCompanyServiceImpl.getAllServiceCompany()).thenReturn(serviceCompanyDtoList);
         ResponseEntity<List<String>> responseEntity = new ResponseEntity(result, HttpStatus.OK);
         Assertions.assertEquals(serviceCompanyController.getAllServiceCompany(), responseEntity);
     }
@@ -63,7 +63,7 @@ public class ServiceCompanyControllerTest {
         stringList.add(autoDto1.toString());
         stringList.add(autoDto2.toString());
         stringList.add(autoDto.toString());
-        Mockito.when(serviceCompanyService.getAllVinToServiceCompany(autoDto.getNameServiceCompany())).thenReturn(autoDtoList);
+        Mockito.when(serviceCompanyServiceImpl.getAllVinToServiceCompany(autoDto.getNameServiceCompany())).thenReturn(autoDtoList);
         ResponseEntity<List<String>> responseEntity = new ResponseEntity(stringList, HttpStatus.OK);
         Assertions.assertEquals(serviceCompanyController.getServiceCompany("SC-5"), responseEntity);
     }
@@ -71,14 +71,14 @@ public class ServiceCompanyControllerTest {
     @Test
     public void postServiceCompanyTest() {
         String sc = "SC-1";
-        Mockito.when(serviceCompanyService.addServiceCompany(sc)).thenReturn(true);
+        Mockito.when(serviceCompanyServiceImpl.addServiceCompany(sc)).thenReturn(true);
         ResponseEntity<String> responseEntity = new ResponseEntity<>("true", HttpStatus.OK);
         Assertions.assertEquals(serviceCompanyController.postServiceCompany(sc), responseEntity);
     }
 
     @Test
     public void deleteAllServiceCompanyTest() {
-        Mockito.when(serviceCompanyService.deleteAllServiceCompany()).thenReturn(true);
+        Mockito.when(serviceCompanyServiceImpl.deleteAllServiceCompany()).thenReturn(true);
         ResponseEntity<String> responseEntity = new ResponseEntity<>("true", HttpStatus.OK);
         Assertions.assertEquals(serviceCompanyController.deleteAllServiceCompany(), responseEntity);
     }
@@ -86,7 +86,7 @@ public class ServiceCompanyControllerTest {
     @Test
     public void deleteServiceCompanyTest() {
         String sc = "SC-1";
-        Mockito.when(serviceCompanyService.deleteServiceCompany(sc)).thenReturn(true);
+        Mockito.when(serviceCompanyServiceImpl.deleteServiceCompany(sc)).thenReturn(true);
         ResponseEntity<String> responseEntity = new ResponseEntity<>("true", HttpStatus.OK);
         Assertions.assertEquals(serviceCompanyController.deleteServiceCompany(sc), responseEntity);
     }
@@ -95,7 +95,7 @@ public class ServiceCompanyControllerTest {
     public void putServiceCompanyTest() {
         String sc = "SC-1";
         String sc2 = "SC-2";
-        Mockito.when(serviceCompanyService.updateServiceCompany(sc, sc2)).thenReturn(true);
+        Mockito.when(serviceCompanyServiceImpl.updateServiceCompany(sc, sc2)).thenReturn(true);
         ResponseEntity<String> responseEntity = new ResponseEntity<>("true", HttpStatus.OK);
         Assertions.assertEquals(serviceCompanyController.putServiceCompany(sc, sc2), responseEntity);
     }
