@@ -11,11 +11,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/Auto")
+@RequestMapping("/auto")
 public class AutoController {
-    private AutoService autoService;
 
-    @GetMapping("/GET")
+    private final AutoService autoService;
+
+    public AutoController(AutoService autoService) {
+        this.autoService = autoService;
+    }
+
+    @GetMapping()
     public ResponseEntity<List<String>> getAllAuto() {
         List<String> result = new ArrayList<>();
         try {
@@ -29,7 +34,7 @@ public class AutoController {
         }
     }
 
-    @GetMapping("/GET/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<String> getAuto(@PathVariable String id) {
         try {
             return ResponseEntity.ok(autoService.getAuto(id).toString());
@@ -38,7 +43,7 @@ public class AutoController {
         }
     }
 
-    @PostMapping("/POST/{id}/{sc}")
+    @PostMapping("/{id}/{sc}")
     public ResponseEntity<String> postAuto(@PathVariable String id, @PathVariable String sc) {
         try {
             Boolean res = autoService.addAuto(id, sc);
@@ -48,7 +53,7 @@ public class AutoController {
         }
     }
 
-    @DeleteMapping("/DELETE")
+    @DeleteMapping()
     public ResponseEntity<String> deleteAllAuto() {
         String result = "Ошибка";
         try {
@@ -59,7 +64,7 @@ public class AutoController {
         }
     }
 
-    @DeleteMapping("/DELETE/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAuto(@PathVariable String id) {
         try {
             Boolean result = autoService.deleteAuto(id);
@@ -69,7 +74,7 @@ public class AutoController {
         }
     }
 
-    @PutMapping("/PUT/")
+    @PutMapping("/put/")
     public ResponseEntity putAuto() {
         try {
             return ResponseEntity.ok("PUT");

@@ -15,10 +15,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 @Service
 public class AutoService {
-    @Autowired
-    private ServiceCompanyRepository serviceCompanyRepository;
-    @Autowired
-    private AutoRepository autoRepository;
+    private final ServiceCompanyRepository serviceCompanyRepository;
+    private final AutoRepository autoRepository;
 
     public AutoService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
         this.serviceCompanyRepository = newServiceCompanyRepository;

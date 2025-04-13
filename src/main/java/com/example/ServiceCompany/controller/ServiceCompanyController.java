@@ -14,10 +14,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/ServiceCompany")
 public class ServiceCompanyController {
-    @Autowired
-    private ServiceCompanyService serviceCompanyService;
 
-    @GetMapping("/GET")
+    private final ServiceCompanyService serviceCompanyService;
+
+    public ServiceCompanyController(ServiceCompanyService serviceCompanyService) {
+        this.serviceCompanyService = serviceCompanyService;
+    }
+
+    @GetMapping()
     public ResponseEntity<List<String>> getAllServiceCompany() {
         List<String> result = new ArrayList<>();
         try {
@@ -31,7 +35,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @GetMapping("/GET/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<List<String>> getServiceCompany(@PathVariable String id) {
         List<String> vinList = new ArrayList<>();
         try {
@@ -45,7 +49,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @PostMapping("/POST/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<String> postServiceCompany(@PathVariable String id) {
         Boolean result = null;
         try {
@@ -56,7 +60,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @DeleteMapping("/DELETE")
+    @DeleteMapping()
     public ResponseEntity<String> deleteAllServiceCompany() {
         Boolean result = false;
         try {
@@ -67,7 +71,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @DeleteMapping("/DELETE/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteServiceCompany(@PathVariable String id) {
         Boolean result = false;
         try {
@@ -78,7 +82,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @PutMapping("/PUT/{oldSC}/{newSC}")
+    @PutMapping("/{oldSC}/{newSC}")
     public ResponseEntity putServiceCompany(@PathVariable String oldSC, String newSc) {
         Boolean result = false;
         try {
