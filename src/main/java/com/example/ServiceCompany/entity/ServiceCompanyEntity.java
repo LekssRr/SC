@@ -1,6 +1,7 @@
 package com.example.ServiceCompany.entity;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,13 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "ServiceCompany")
 public class ServiceCompanyEntity {
     @Id
-    @Column(name = "service_company")
     private String nameServiceCompany;
     @OneToMany(mappedBy = "serviceCompany" , cascade = CascadeType.PERSIST)
-    @Column(name = "auto")
     private List<AutoEntity> autoEntities;
 
     public ServiceCompanyEntity(String newNameServiceCompany)

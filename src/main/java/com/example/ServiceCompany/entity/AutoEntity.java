@@ -1,15 +1,13 @@
 package com.example.ServiceCompany.entity;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "Auto")
 public class AutoEntity {
     @Id
-    @Column(name = "vin")
     private String vinCode;
     @ManyToOne
-    @Column(name = "service_company")
     private ServiceCompanyEntity serviceCompany;
 
     public AutoEntity(String newVinCode, ServiceCompanyEntity newServiceCompany) {

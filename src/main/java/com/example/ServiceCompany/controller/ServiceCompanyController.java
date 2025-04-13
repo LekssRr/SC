@@ -14,12 +14,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/ServiceCompany")
 public class ServiceCompanyController {
-
+    @Autowired
     private ServiceCompanyService serviceCompanyService;
-
-    public ServiceCompanyController() {
-        //this.serviceCompanyService = newServiceCompnayService;
-    }
 
     @GetMapping("/GET")
     public ResponseEntity<List<String>> getAllServiceCompany() {

@@ -7,16 +7,21 @@ import com.example.ServiceCompany.entity.ServiceCompanyEntity;
 import com.example.ServiceCompany.repository.AutoRepository;
 import com.example.ServiceCompany.repository.ServiceCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Service
 public class ServiceCompanyService {
 
+    @Autowired
     private ServiceCompanyRepository serviceCompanyRepository;
+    @Autowired
     private AutoRepository autoRepository;
+
     public ServiceCompanyService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
         this.serviceCompanyRepository = newServiceCompanyRepository;
         this.autoRepository = newAutoRepository;

@@ -13,10 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/Auto")
 public class AutoController {
-
     private AutoService autoService;
-    public AutoController() {
-    }
 
     @GetMapping("/GET")
     public ResponseEntity<List<String>> getAllAuto() {
