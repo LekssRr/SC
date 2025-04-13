@@ -9,14 +9,13 @@ import com.example.ServiceCompany.service.ServiceCompanyServiceImpl;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -24,33 +23,42 @@ import javax.sql.DataSource;
 public class ApplicationConfig {
 
     @Bean
-    public AutoService autoService(AutoRepository autoRepository, ServiceCompanyRepository serviceCompanyRepository)
-    {
+    public AutoService autoService(AutoRepository autoRepository, ServiceCompanyRepository serviceCompanyRepository) {
         return new AutoServiceImpl(serviceCompanyRepository, autoRepository);
     }
+
     @Bean
-    public ServiceCompanyService serviceCompanyService(AutoRepository autoRepository, ServiceCompanyRepository serviceCompanyRepository)
-    {
+    public ServiceCompanyService serviceCompanyService(AutoRepository autoRepository, ServiceCompanyRepository serviceCompanyRepository) {
         return new ServiceCompanyServiceImpl(serviceCompanyRepository, autoRepository);
     }
+
     @Bean
     public DataSource dataSource() {
 
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.HSQL).build();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/auto_dealer");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("2112");
+        return dataSource;
     }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setGenerateDdl(true);
+        adapter.setShowSql(true);
+        adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
 
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.example.ServiceCompany");
-        factory.setDataSource(dataSource());
-        return factory;
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(dataSource());
+        factoryBean.setJpaVendorAdapter(adapter);
+        factoryBean.setPackagesToScan("com.example.ServiceCompany");
+
+        return factoryBean;
     }
+
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 
