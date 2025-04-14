@@ -9,27 +9,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
+
 public class AutoControllerTest {
     @Mock
-    private AutoServiceImpl autoServiceImpl;
+    private AutoServiceImpl autoServiceImpl = Mockito.mock(AutoServiceImpl.class);
     @InjectMocks
-    private AutoController autoController;
-    MockMvc mockMvc;
-
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(autoController).build();
-    }
+    private AutoController autoController = new AutoController(autoServiceImpl);
 
     @Test
     public void getAllAutoTest() {

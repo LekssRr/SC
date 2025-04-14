@@ -4,33 +4,24 @@ import com.example.ServiceCompany.dto.AutoDto;
 import com.example.ServiceCompany.dto.ServiceCompanyDto;
 import com.example.ServiceCompany.service.ServiceCompanyServiceImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
 public class ServiceCompanyControllerTest {
     @Mock
-    private ServiceCompanyServiceImpl serviceCompanyServiceImpl;
+    private ServiceCompanyServiceImpl serviceCompanyServiceImpl = Mockito.mock(ServiceCompanyServiceImpl.class);
     @InjectMocks
-    private ServiceCompanyController serviceCompanyController;
-    MockMvc mockMvc;
+    private ServiceCompanyController serviceCompanyController = new ServiceCompanyController(serviceCompanyServiceImpl);
 
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(serviceCompanyController).build();
-    }
 
     @Test
     public void getAllServiceCompanyTest() {
